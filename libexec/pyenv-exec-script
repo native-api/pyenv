@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+#
+# Summary: Run a Python script with the Python version determined by the script's location
+#
+# Usage: pyenv exec-script <script> [arg1 arg2...]
+#
+#    or
+#
+#        set `#!/usr/bin/env pyenv-exec-script' as the script's shebang and make it executable
+#
+
+set -e
+export PYENV_DIR="$(dirname "$1")"
+exec pyenv exec python "$@"
