@@ -191,39 +191,39 @@ https://github.com/pyenv/pyenv-installer
 
 ### Basic GitHub Checkout
 
-This will get you going with the latest version of pyenv and make it
+This will get you going with the latest version of Pyenv and make it
 easy to fork and contribute any changes back upstream.
 
 1. **Check out Pyenv where you want it installed.**
-   A good place to choose is `$HOME/.pyenv` (but you can install it somewhere else).
+   A good place to choose is `$HOME/.pyenv` (but you can install it somewhere else):
 
         git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 
-   Optionally, try to compile dynamic Bash extension to speed up pyenv. Don't
-   worry if it fails; pyenv will still work normally:
+   Optionally, try to compile a dynamic Bash extension to speed up Pyenv. Don't
+   worry if it fails; Pyenv will still work normally:
 
         cd ~/.pyenv && src/configure && make -C src
 
 2. **Configure your shell's environment for Pyenv**
 
-   **Note:** The below examples are intended for common shell setups.  
+   **Note:** The below instructions and code samples are intended for common shell setups.  
    If you have an uncommon setup and/or they don't work for you,
    use the guidance text and [Advanced Configuration](#advanced-configuration)
-   below to figure out what you need to do in your specific case.
+   section below to figure out what you need to do in your specific case.
    
    **MacOS note:** If you installed Pyenv with Homebrew, you don't need
    to add the `PYENV_ROOT=` and `PATH=` lines.
    
    1. **Adjust the session-wide environment for your account.** Define
-   environment variable `PYENV_ROOT` to point to the path where
-   pyenv repo is cloned, add the `pyenv` command-line utility to your `PATH`,
+   the `PYENV_ROOT` environment variable to point to the path where
+   you cloned the Pyenv repo, add the `pyenv` command-line utility to your `PATH`,
    run the output of `pyenv init --path` to enable shims.
    
-      These commands need to be added into the shell startup files in such a way
+      These commands need to be added into your shell startup files in such a way
       that _they are executed only once per session, by its login shell._
       This typically means they need to be added into a per-user shell-specific
       `~/.*profile` file, _and_ into `~/.profile`, too, so that they are also
-      run by GUI managers which typically act as a `sh` login shell.
+      run by GUI managers (which typically act as a `sh` login shell).
 
       - For **bash**:
 
@@ -272,7 +272,7 @@ easy to fork and contribute any changes back upstream.
    2. **Add `pyenv` into your shell** by running the output of `pyenv init -`
      to enable autocompletion and all subcommands.
    
-      This command needs to run at startup of any interactive shell.
+      This command needs to run at startup of any interactive shell instance.
       In an interactive login shell, it needs to run _after_ the commands
       from the previous step.
 
@@ -308,7 +308,7 @@ easy to fork and contribute any changes back upstream.
     ```sh
     pyenv install 2.7.8
     ```
-   **NOTE:** If you need to pass configure option to build, please use the
+   **NOTE:** If you need to pass a `configure` option to a build, please use the
    ```CONFIGURE_OPTS``` environment variable.
 
    **NOTE:** If you want to use proxy to download, please set the `http_proxy` and `https_proxy`
