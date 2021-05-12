@@ -207,23 +207,23 @@ easy to fork and contribute any changes back upstream.
 2. **Configure your shell's environment for Pyenv**
 
    **Note:** The below examples are intended for common shell setups.  
-   Use the guidance text and [Advanced Configuration](#advanced-configuration)
-   below to figure out what you need to do in your specific case if you have
-   an uncommon setup and/or they don't work for you.
+   If you have an uncommon setup and/or they don't work for you,
+   use the guidance text and [Advanced Configuration](#advanced-configuration)
+   below to figure out what you need to do in your specific case.
    
    **MacOS note:** If you installed Pyenv with Homebrew, you don't need
    to add the `PYENV_ROOT=` and `PATH=` lines.
    
-   - **Adjust the session-wide environment for your account.** Define
+   1. **Adjust the session-wide environment for your account.** Define
    environment variable `PYENV_ROOT` to point to the path where
    pyenv repo is cloned, add the `pyenv` command-line utility to your `PATH`,
    run the output of `pyenv init --path` to enable shims.
    
-   These commands need to be added into the shell startup files in such a way
-   that _they are executed only once per session, by its login shell._
-   This typically means they need to be added into a per-user shell-specific
-   `~/.*profile` file, _and_ into `~/.profile` so that they are also run by
-   GUI managers which typically act as a `sh` login shell.
+      These commands need to be added into the shell startup files in such a way
+      that _they are executed only once per session, by its login shell._
+      This typically means they need to be added into a per-user shell-specific
+      `~/.*profile` file, _and_ into `~/.profile` so that they are also run by
+      GUI managers which typically act as a `sh` login shell.
 
       - For **bash**:
 
@@ -269,12 +269,12 @@ easy to fork and contribute any changes back upstream.
 
       **Proxy note**: If you use a proxy, export `http_proxy` and `https_proxy` too.
 
-   - **Add `pyenv` to your shell** by running the output of `pyenv init -`
+   2. **Add `pyenv` to your shell** by running the output of `pyenv init -`
      to enable autocompletion and all subcommands.
    
-     This command needs to run at startup of any interactive shell.
-     In an interactive login shell, it needs to run _after_ the commands
-     from the previous step.
+      This command needs to run at startup of any interactive shell.
+      In an interactive login shell, it needs to run _after_ the commands
+      from the previous step.
 
       - For **bash**:
         ~~~ bash
