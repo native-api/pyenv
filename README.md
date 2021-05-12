@@ -181,7 +181,7 @@ For pyenv to install python correctly you should [**install the Python build dep
       ```
    2. Then follow the rest of the post-installation steps under [Basic GitHub Checkout](https://github.com/pyenv/pyenv#basic-github-checkout), starting with #2 ("Configure your shell's environment for Pyenv").
 
-If you're on Windows, consider using @kirankotari's [`pyenv-win`](https://github.com/pyenv-win/pyenv-win) fork. (`pyenv` does not work on windows outside the Windows Subsystem for Linux)
+If you're on Windows, consider using @kirankotari's [`pyenv-win`](https://github.com/pyenv-win/pyenv-win) fork. (Pyenv does not work in Windows outside the Windows Subsystem for Linux.)
 
 ### The automatic installer
 
