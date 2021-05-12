@@ -179,7 +179,7 @@ For pyenv to install python correctly you should [**install the Python build dep
       brew update
       brew install pyenv
       ```
-   2. Then follow the rest of the post-installation steps under [Basic GitHub Checkout](https://github.com/pyenv/pyenv#basic-github-checkout), starting with #3 ("Add `pyenv init` to your shell to enable shims and autocompletion").
+   2. Then follow the rest of the post-installation steps under [Basic GitHub Checkout](https://github.com/pyenv/pyenv#basic-github-checkout), starting with #2 ("Configure your shell's environment for Pyenv").
 
 If you're on Windows, consider using @kirankotari's [`pyenv-win`](https://github.com/pyenv-win/pyenv-win) fork. (`pyenv` does not work on windows outside the Windows Subsystem for Linux)
 
@@ -210,6 +210,9 @@ easy to fork and contribute any changes back upstream.
    Use the guidance text and [Advanced Configuration](#advanced-configuration)
    below to figure out what you need to do in your specific case if you have
    an uncommon setup and/or they don't work for you.
+   
+   **MacOS note:** If you installed Pyenv with Homebrew, you don't need
+   to add the `PYENV_ROOT=` and `PATH=` lines.
    
    - **Adjust the session-wide environment for your account.** Define
    environment variable `PYENV_ROOT` to point to the path where
@@ -364,22 +367,23 @@ git checkout v0.1.0
 The simplicity of pyenv makes it easy to temporarily disable it, or
 uninstall from the system.
 
-1. To **disable** pyenv managing your Python versions, simply remove the
+1. To **disable** Pyenv managing your Python versions, simply remove the
   `pyenv init` invocations from your shell startup configuration. This will
-  remove pyenv shims directory from `PATH`, and future invocations like
-  `python` will execute the system Python version, as it was before pyenv.
+  remove Pyenv shims directory from `PATH`, and future invocations like
+  `python` will execute the system Python version, as it was before Pyenv.
 
   `pyenv` will still be accessible on the command line, but your Python
   apps won't be affected by version switching.
 
-2. To completely **uninstall** pyenv, perform step (1) and then remove
+2. To completely **uninstall** pyenv, remove _all_ configuration lines for it
+   from your shell startup configuration, and then remove
    its root directory. This will **delete all Python versions** that were
    installed under `` $(pyenv root)/versions/ `` directory:
     ```sh
     rm -rf $(pyenv root)
     ```
-   If you've installed pyenv using a package manager, as a final step
-   perform the pyenv package removal. For instance, for Homebrew:
+   If you've installed Pyenv using a package manager, as a final step,
+   perform the Pyenv package removal. For instance, for Homebrew:
 
         brew uninstall pyenv
 
@@ -391,7 +395,8 @@ profile is doing.
 `pyenv init` is the only command that crosses the line of loading
 extra commands into your shell. Coming from RVM, some of you might be
 opposed to this idea. Here's what `pyenv init` actually does.
-Step 1 is done by `pyenv init --path`, the others are done by `pyenv init -`.
+Step 1 is done by `eval "$(pyenv init --path)"`, the others are done by
+`eval "$(pyenv init -)"`.
 
 
 1. **Sets up your shims path.** This is the only requirement for pyenv to
