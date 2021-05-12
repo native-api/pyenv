@@ -235,24 +235,6 @@ easy to fork and contribute any changes back upstream.
             eval "$(pyenv init --path)"
             ~~~
 
-            <!--This is an alternative option and needn't be replicated to `pyenv init`-->
-            Alternatively, for an automated installation, run the following
-            (this results in duplicated code, but the above option is not possible
-            automatically in a reliable way):
-            
-            ~~~ bash
-            echo -e 'if shopt -q login_shell; then' \
-                  '\n  export PYENV_ROOT="$HOME/.pyenv"' \
-                  '\n  export PATH="$PYENV_ROOT/bin:$PATH"' \
-                  '\n eval "$(pyenv init --path)"' \
-                  '\nfi' >> ~/.bashrc
-            echo -e 'if [ -z "$BASH_VERSION" ]; then'\
-                  '\n  export PYENV_ROOT="$HOME/.pyenv"'\
-                  '\n  export PATH="$PYENV_ROOT/bin:$PATH"'\
-                  '\n  eval "$(pyenv init --path)"'\
-                  '\nfi' >>~/.profile
-            ~~~
-
          - **If your `~/.profile` doesn't source `~/.bashrc` or doesn't exist (Debian):**
 
             ~~~ bash
