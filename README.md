@@ -228,6 +228,7 @@ easy to fork and contribute any changes back upstream.
       - For **bash**:
 
          - **If your `~/.profile` sources `~/.bashrc` (Ubuntu):**
+
             Put these lines into `~/.profile` _before_ the part that sources `~/.bashrc`:
             ~~~bash
             export PYENV_ROOT="$HOME/.pyenv"
