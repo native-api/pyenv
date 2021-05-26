@@ -211,16 +211,17 @@ If you have an uncommon setup and they don't work for you,
 use the guidance text and the [Advanced Configuration](#advanced-configuration)
 section below to figure out what you need to do in your specific case.
    
-1. ##### **Adjust the session-wide environment for your account.**
-Define the `PYENV_ROOT` environment variable to point to the path where
-you cloned the Pyenv repo, add the `pyenv` command-line utility to your `PATH`,
-run the output of `pyenv init --path` to enable shims.
+    ##### 1. **Adjust the session-wide environment for your account.**
 
-These commands need to be added into your shell startup files in such a way
-that _they are executed only once per session, by its login shell._
-This typically means they need to be added into a per-user shell-specific
-`~/.*profile` file, _and_ into `~/.profile`, too, so that they are also
-run by GUI managers (which typically act as a `sh` login shell).
+    Define the `PYENV_ROOT` environment variable to point to the path where
+    you cloned the Pyenv repo, add the `pyenv` command-line utility to your `PATH`,
+    run the output of `pyenv init --path` to enable shims.
+
+    These commands need to be added into your shell startup files in such a way
+    that _they are executed only once per session, by its login shell._
+    This typically means they need to be added into a per-user shell-specific
+    `~/.*profile` file, _and_ into `~/.profile`, too, so that they are also
+    run by GUI managers (which typically act as a `sh` login shell).
 
 **MacOS note:** If you installed Pyenv with Homebrew, you don't need
 to add the `PYENV_ROOT=` and `PATH=` lines.
