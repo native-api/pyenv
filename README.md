@@ -211,7 +211,7 @@ If you have an uncommon setup and they don't work for you,
 use the guidance text and the [Advanced Configuration](#advanced-configuration)
 section below to figure out what you need to do in your specific case.
    
-##### 1. **Adjust the session-wide environment for your account.**
+1. ##### **Adjust the session-wide environment for your account.**
 Define the `PYENV_ROOT` environment variable to point to the path where
 you cloned the Pyenv repo, add the `pyenv` command-line utility to your `PATH`,
 run the output of `pyenv init --path` to enable shims.
@@ -283,7 +283,7 @@ You also don't need to add commands into `~/.profile` if your shell doesn't use 
 
 **Proxy note**: If you use a proxy, export `http_proxy` and `https_proxy`, too.
 
-##### 2. **Add `pyenv` into your shell as a shell function**
+2. ##### **Add `pyenv` into your shell as a shell function**
   by running the output of `pyenv init -` to enable autocompletion and some subcommands
   like `pyenv shell`.
 
