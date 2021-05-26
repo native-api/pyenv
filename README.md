@@ -234,14 +234,14 @@ You also don't need to add commands into `~/.profile` if your shell doesn't use 
    echo 'eval "$(pyenv init --path)"' >> ~/.profile
    ~~~
 
-      - **If your `~/.profile` sources `~/.bashrc` (Debian, Ubuntu, Mint):**
+   - **If your `~/.profile` sources `~/.bashrc` (Debian, Ubuntu, Mint):**
 
-         Put these lines into `~/.profile` _before_ the part that sources `~/.bashrc`:
-         ~~~bash
-         export PYENV_ROOT="$HOME/.pyenv"
-         export PATH="$PYENV_ROOT/bin:$PATH"
-         eval "$(pyenv init --path)"
-         ~~~
+      Put these lines into `~/.profile` _before_ the part that sources `~/.bashrc`:
+      ~~~bash
+      export PYENV_ROOT="$HOME/.pyenv"
+      export PATH="$PYENV_ROOT/bin:$PATH"
+      eval "$(pyenv init --path)"
+      ~~~
 
       <!--This is an alternative option and needn't be replicated to `pyenv init`-->
       Alternatively, for an automated installation, you can run the following:
