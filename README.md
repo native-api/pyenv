@@ -211,113 +211,113 @@ If you have an uncommon setup and they don't work for you,
 use the guidance text and the [Advanced Configuration](#advanced-configuration)
 section below to figure out what you need to do in your specific case.
    
-   ##### 1. **Adjust the session-wide environment for your account.**
-   Define the `PYENV_ROOT` environment variable to point to the path where
-   you cloned the Pyenv repo, add the `pyenv` command-line utility to your `PATH`,
-   run the output of `pyenv init --path` to enable shims.
-   
-   These commands need to be added into your shell startup files in such a way
-   that _they are executed only once per session, by its login shell._
-   This typically means they need to be added into a per-user shell-specific
-   `~/.*profile` file, _and_ into `~/.profile`, too, so that they are also
-   run by GUI managers (which typically act as a `sh` login shell).
+##### 1. **Adjust the session-wide environment for your account.**
+Define the `PYENV_ROOT` environment variable to point to the path where
+you cloned the Pyenv repo, add the `pyenv` command-line utility to your `PATH`,
+run the output of `pyenv init --path` to enable shims.
 
-   **MacOS note:** If you installed Pyenv with Homebrew, you don't need
-   to add the `PYENV_ROOT=` and `PATH=` lines.
-   You also don't need to add commands into `~/.profile` if your shell doesn't use it.
-   
-   - For **bash**:
+These commands need to be added into your shell startup files in such a way
+that _they are executed only once per session, by its login shell._
+This typically means they need to be added into a per-user shell-specific
+`~/.*profile` file, _and_ into `~/.profile`, too, so that they are also
+run by GUI managers (which typically act as a `sh` login shell).
 
-      ~~~ bash
-      echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.profile
-      echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.profile
-      echo 'eval "$(pyenv init --path)"' >> ~/.profile
-      ~~~
+**MacOS note:** If you installed Pyenv with Homebrew, you don't need
+to add the `PYENV_ROOT=` and `PATH=` lines.
+You also don't need to add commands into `~/.profile` if your shell doesn't use it.
 
-         - **If your `~/.profile` sources `~/.bashrc` (Debian, Ubuntu, Mint):**
+- For **bash**:
 
-            Put these lines into `~/.profile` _before_ the part that sources `~/.bashrc`:
-            ~~~bash
-            export PYENV_ROOT="$HOME/.pyenv"
-            export PATH="$PYENV_ROOT/bin:$PATH"
-            eval "$(pyenv init --path)"
-            ~~~
+   ~~~ bash
+   echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.profile
+   echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.profile
+   echo 'eval "$(pyenv init --path)"' >> ~/.profile
+   ~~~
 
-         <!--This is an alternative option and needn't be replicated to `pyenv init`-->
-         Alternatively, for an automated installation, you can run the following:
-         ~~~ bash
-         echo -e 'if shopt -q login_shell; then' \
-               '\n  export PYENV_ROOT="$HOME/.pyenv"' \
-               '\n  export PATH="$PYENV_ROOT/bin:$PATH"' \
-               '\n eval "$(pyenv init --path)"' \
-               '\nfi' >> ~/.bashrc
-         echo -e 'if [ -z "$BASH_VERSION" ]; then'\
-               '\n  export PYENV_ROOT="$HOME/.pyenv"'\
-               '\n  export PATH="$PYENV_ROOT/bin:$PATH"'\
-               '\n  eval "$(pyenv init --path)"'\
-               '\nfi' >>~/.profile
+      - **If your `~/.profile` sources `~/.bashrc` (Debian, Ubuntu, Mint):**
+
+         Put these lines into `~/.profile` _before_ the part that sources `~/.bashrc`:
+         ~~~bash
+         export PYENV_ROOT="$HOME/.pyenv"
+         export PATH="$PYENV_ROOT/bin:$PATH"
+         eval "$(pyenv init --path)"
          ~~~
 
-      **Note:** If you have `~/.bash_profile`, make sure that it too executes the above-added commands,
-      e.g. by copying them there or by `source`'ing `~/.profile`.
+      <!--This is an alternative option and needn't be replicated to `pyenv init`-->
+      Alternatively, for an automated installation, you can run the following:
+      ~~~ bash
+      echo -e 'if shopt -q login_shell; then' \
+            '\n  export PYENV_ROOT="$HOME/.pyenv"' \
+            '\n  export PATH="$PYENV_ROOT/bin:$PATH"' \
+            '\n eval "$(pyenv init --path)"' \
+            '\nfi' >> ~/.bashrc
+      echo -e 'if [ -z "$BASH_VERSION" ]; then'\
+            '\n  export PYENV_ROOT="$HOME/.pyenv"'\
+            '\n  export PATH="$PYENV_ROOT/bin:$PATH"'\
+            '\n  eval "$(pyenv init --path)"'\
+            '\nfi' >>~/.profile
+      ~~~
+
+   **Note:** If you have `~/.bash_profile`, make sure that it too executes the above-added commands,
+   e.g. by copying them there or by `source`'ing `~/.profile`.
+
+- For **Zsh**:
+
+  Same as for Bash above, but add the commands into both `~/.profile`
+  and `~/.zprofile`.
+     
+- For **Fish shell**:
+
+  Execute this interactively:
+  ~~~ fish
+  set -Ux PYENV_ROOT $HOME/.pyenv
+  set -U fish_user_paths $PYENV_ROOT/bin $fish_user_paths
+  ~~~
+
+  And add this to `~/.config/fish/config.fish`:
+  ~~~ fish
+  status is-login; and pyenv init --path | source
+  ~~~
+
+  If Fish is not your login shell, also follow the Bash/Zsh instructions to add to `~/.profile`.
+
+**Proxy note**: If you use a proxy, export `http_proxy` and `https_proxy`, too.
+
+##### 2. **Add `pyenv` into your shell as a shell function**
+  by running the output of `pyenv init -` to enable autocompletion and some subcommands
+  like `pyenv shell`.
+
+   This command needs to run at startup of any interactive shell instance.
+   In an interactive login shell, it needs to run _after_ the commands
+   from the previous step.
+
+   - For **bash**:
+     ~~~ bash
+     echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+     ~~~
+     
+     - **If your `/etc/profile` sources `~/.bashrc` (SUSE):**
+     
+       ~~~bash
+       echo 'if command -v pyenv >/dev/null; then eval "$(pyenv init -)"; done' >> ~/.bashrc 
+       ~~~
+
+     **Warning**: There are some systems where the `BASH_ENV` variable is configured
+     to point to `.bashrc`. On such systems, you should almost certainly put the above-mentioned line
+     `eval "$(pyenv init -)"` into `.bash_profile`, and **not** into `.bashrc`. Otherwise, you
+     may observe strange behaviour, such as `pyenv` getting into an infinite loop.
+     See [#264](https://github.com/pyenv/pyenv/issues/264) for details.
 
    - For **Zsh**:
+     ~~~ zsh
+     echo 'eval "$(pyenv init -)"' >> ~/.zshrc
+     ~~~
 
-     Same as for Bash above, but add the commands into both `~/.profile`
-     and `~/.zprofile`.
-        
    - For **Fish shell**:
-
-     Execute this interactively:
+     Add this to `~/.config/fish/config.fish`:
      ~~~ fish
-     set -Ux PYENV_ROOT $HOME/.pyenv
-     set -U fish_user_paths $PYENV_ROOT/bin $fish_user_paths
+     pyenv init - | source
      ~~~
-
-     And add this to `~/.config/fish/config.fish`:
-     ~~~ fish
-     status is-login; and pyenv init --path | source
-     ~~~
-
-     If Fish is not your login shell, also follow the Bash/Zsh instructions to add to `~/.profile`.
-
-   **Proxy note**: If you use a proxy, export `http_proxy` and `https_proxy`, too.
-
-   ##### 2. **Add `pyenv` into your shell as a shell function**
-     by running the output of `pyenv init -` to enable autocompletion and some subcommands
-     like `pyenv shell`.
-   
-      This command needs to run at startup of any interactive shell instance.
-      In an interactive login shell, it needs to run _after_ the commands
-      from the previous step.
-
-      - For **bash**:
-        ~~~ bash
-        echo 'eval "$(pyenv init -)"' >> ~/.bashrc
-        ~~~
-        
-        - **If your `/etc/profile` sources `~/.bashrc` (SUSE):**
-        
-          ~~~bash
-          echo 'if command -v pyenv >/dev/null; then eval "$(pyenv init -)"; done' >> ~/.bashrc 
-          ~~~
-
-        **Warning**: There are some systems where the `BASH_ENV` variable is configured
-        to point to `.bashrc`. On such systems, you should almost certainly put the above-mentioned line
-        `eval "$(pyenv init -)"` into `.bash_profile`, and **not** into `.bashrc`. Otherwise, you
-        may observe strange behaviour, such as `pyenv` getting into an infinite loop.
-        See [#264](https://github.com/pyenv/pyenv/issues/264) for details.
-
-      - For **Zsh**:
-        ~~~ zsh
-        echo 'eval "$(pyenv init -)"' >> ~/.zshrc
-        ~~~
-
-      - For **Fish shell**:
-        Add this to `~/.config/fish/config.fish`:
-        ~~~ fish
-        pyenv init - | source
-        ~~~
 
 4. **Restart your login session for the changes to take effect.**
    E.g. if you're in a GUI session, you need to fully log out and log back in.
