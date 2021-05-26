@@ -194,7 +194,7 @@ https://github.com/pyenv/pyenv-installer
 This will get you going with the latest version of Pyenv and make it
 easy to fork and contribute any changes back upstream.
 
-1. **Check out Pyenv where you want it installed.**
+#### 1. **Check out Pyenv where you want it installed.**
    A good place to choose is `$HOME/.pyenv` (but you can install it somewhere else):
 
         git clone https://github.com/pyenv/pyenv.git ~/.pyenv
@@ -204,15 +204,15 @@ easy to fork and contribute any changes back upstream.
 
         cd ~/.pyenv && src/configure && make -C src
 
-2. **Configure your shell's environment for Pyenv**
+#### 2. **Configure your shell's environment for Pyenv**
 
    **Note:** The below instructions for specific shells are designed for common shell setups.  
    If you have an uncommon setup and they don't work for you,
    use the guidance text and the [Advanced Configuration](#advanced-configuration)
    section below to figure out what you need to do in your specific case.
    
-   1. **Adjust the session-wide environment for your account.** Define
-   the `PYENV_ROOT` environment variable to point to the path where
+   ##### 1. **Adjust the session-wide environment for your account.**
+   Define the `PYENV_ROOT` environment variable to point to the path where
    you cloned the Pyenv repo, add the `pyenv` command-line utility to your `PATH`,
    run the output of `pyenv init --path` to enable shims.
    
@@ -283,8 +283,9 @@ easy to fork and contribute any changes back upstream.
 
       **Proxy note**: If you use a proxy, export `http_proxy` and `https_proxy`, too.
 
-   2. **Add `pyenv` into your shell** by running the output of `pyenv init -`
-     to enable autocompletion and all subcommands.
+   ##### 2. **Add `pyenv` into your shell as a shell function**
+     by running the output of `pyenv init -` to enable autocompletion and some subcommands
+     like `pyenv shell`.
    
       This command needs to run at startup of any interactive shell instance.
       In an interactive login shell, it needs to run _after_ the commands
@@ -301,6 +302,12 @@ easy to fork and contribute any changes back upstream.
           echo 'if command -v pyenv >/dev/null; then eval "$(pyenv init -)"; done' >> ~/.bashrc 
           ~~~
 
+        **Warning**: There are some systems where the `BASH_ENV` variable is configured
+        to point to `.bashrc`. On such systems, you should almost certainly put the above-mentioned line
+        `eval "$(pyenv init -)"` into `.bash_profile`, and **not** into `.bashrc`. Otherwise, you
+        may observe strange behaviour, such as `pyenv` getting into an infinite loop.
+        See [#264](https://github.com/pyenv/pyenv/issues/264) for details.
+
       - For **Zsh**:
         ~~~ zsh
         echo 'eval "$(pyenv init -)"' >> ~/.zshrc
@@ -311,12 +318,6 @@ easy to fork and contribute any changes back upstream.
         ~~~ fish
         pyenv init - | source
         ~~~
-
-      **General warning**: There are some systems where the `BASH_ENV` variable is configured
-      to point to `.bashrc`. On such systems you should almost certainly put the above-mentioned line
-      `eval "$(pyenv init -)"` into `.bash_profile`, and **not** into `.bashrc`. Otherwise you
-      may observe strange behaviour, such as `pyenv` getting into an infinite loop.
-      See [#264](https://github.com/pyenv/pyenv/issues/264) for details.
 
 4. **Restart your login session for the changes to take effect.**
    E.g. if you're in a GUI session, you need to fully log out and log back in.
