@@ -2481,6 +2481,10 @@ fi
 prepend_ldflags_libs "-L${PREFIX_PATH}/lib"
 export CPPFLAGS="-I${PREFIX_PATH}/include${CPPFLAGS:+ $CPPFLAGS}"
 
+# to link against the libpython being built in case other ones with the same name
+# are present on linker search path
+export LDFLAGS="-L.{LDFLAGS:+ $LDFLAGS}"
+
 unset PYTHONHOME
 unset PYTHONPATH
 
