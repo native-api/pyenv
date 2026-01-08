@@ -126,6 +126,7 @@ def add_version(version: packaging.version.Version):
 
     handle_t_thunks(version, previous_version, is_prerelease_upgrade)
 
+    print(version)
     return True
 
 
