@@ -1,7 +1,6 @@
 name: Add versions
 
-# Both `issue_comment` and `scheduled` event types are required for this Action
-# to work properly.
+on: workflow_dispatch
 #on:
   #issue_comment:
   #  types: [created]
