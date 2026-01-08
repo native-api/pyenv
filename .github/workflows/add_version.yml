@@ -37,5 +37,6 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v8
         if: env.rc == 0
-        branch: env.branch_name
-        title: env.pr_name
+        with:
+          branch: env.branch_name
+          title: env.pr_name
