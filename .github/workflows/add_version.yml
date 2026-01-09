@@ -38,5 +38,5 @@ jobs:
         uses: peter-evans/create-pull-request@v8
         if: env.rc == 0
         with:
-          branch: env.branch_name
-          title: env.pr_name
+          branch: ${{ env.branch_name }}
+          title: ${{ env.pr_name }}
