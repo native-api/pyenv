@@ -344,11 +344,13 @@ class CPythonAvailableVersionsDirectory(KeyedList[_CPythonAvailableVersionInfo, 
             ))
 
         if not exact_download_found:
+            actual_version = max(additional_versions_found.keys())
+            logging.debug(f"Refining available version {version} to {actual_version}")
             del self[version]
 
             self.append(
                 additional_versions_found[
-                    max(additional_versions_found.keys())
+                    actual_version
                 ])
 
 
