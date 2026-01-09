@@ -8,7 +8,8 @@ on: workflow_dispatch
     # Every N hours
     # - cron: '* */8 * * *'
 
-permissions: {}
+permissions:
+  contents: write
 jobs:
   add_cpython:
     runs-on: ubuntu-latest
