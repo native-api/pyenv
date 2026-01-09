@@ -31,8 +31,8 @@ jobs:
           import sys
           versions=[l.rstrip() for l in open("added_versions.lst")]
           with open(os.environ['GITHUB_ENV'],'a') as f:
-            f.write(f'branch_name={"_".join(versions)}\n')
-            f.write(f'pr_name=Add {", ".join(versions)\n')
+            f.write(f'branch_name={"_".join(versions)}\\n')
+            f.write(f'pr_name=Add {", ".join(versions)\\n')
       
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v8
