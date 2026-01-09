@@ -1,7 +1,7 @@
 name: Add versions
 
 on:
-  - workflow_dispatch
+  - workflow_dispatch: {}
   - schedule:
     # Every N hours
     - cron: '* */8 * * *'
