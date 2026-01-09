@@ -33,6 +33,7 @@ jobs:
           with open(os.environ['GITHUB_ENV'],'a') as f:
             f.write(f'branch_name={"_".join(versions)}\n')
             f.write(f'pr_name=Add {", ".join(versions)}\n')
+          os.remove("added_versions.lst")
       
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v8
