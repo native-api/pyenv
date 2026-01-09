@@ -171,7 +171,7 @@ def main():
                             if v.micro == 0 and v not in VersionDirectory.existing):
         # may actually be a prerelease
         VersionDirectory.available.get_store_available_source_downloads(initial_release, True)
-    del initial_release
+        del initial_release
 
     versions_to_add = sorted(VersionDirectory.available.keys() - VersionDirectory.existing.keys())
 
