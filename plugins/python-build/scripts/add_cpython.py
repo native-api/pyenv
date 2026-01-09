@@ -30,8 +30,6 @@ import tqdm
 
 logger = logging.getLogger(__name__)
 
-REPO = "https://www.python.org/ftp/python/"
-
 CUTOFF_VERSION=packaging.version.Version('3.9')
 EXCLUDED_VERSIONS= {
     packaging.version.Version("3.9.3")  #recalled upstream
@@ -295,12 +293,14 @@ class CPythonAvailableVersionsDirectory(KeyedList[_CPythonAvailableVersionInfo, 
         super().__init__(seq)
         self._session = session
 
-    def populate(self, url=REPO, pattern=r'^\d+'):
+    def populate(self):
         """
         Fetch remote versions
         """
         logger.info("Fetching available CPython versions")
-        for name, url in DownloadPage.enum_download_entries(url, pattern, self._session):
+        for name, url in DownloadPage.enum_download_entries(
+                "https://www.python.org/ftp/python/",
+                r'^\d+', self._session):
             v = packaging.version.Version(name)
             if v < CUTOFF_VERSION or v in EXCLUDED_VERSIONS:
                 continue
@@ -369,6 +369,8 @@ class CPythonExistingScriptsDirectory(KeyedList[_CPythonExistingScriptInfo, pack
                 continue
             try:
                 v = packaging.version.Version(entry_name)
+                if v < CUTOFF_VERSION:
+                    continue
                 # branch tip scrpts are different from release scripts and thus unusable as a pattern
                 if v.dev is not None:
                     continue
