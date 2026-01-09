@@ -490,18 +490,30 @@ class DownloadPage:
 
     @classmethod
     def enum_download_entries(cls, url, pattern, session=None) -> typing.Generator[_DownloadPageEntry, None, None]:
+        """
+        Enum download entries in a standard Apache directory page
+        (incl. CPython download page https://www.python.org/ftp/python/)
+        or a GNU mirror directory page
+        (https://ftpmirror.gnu.org/<package>/ destinations)
+        """
         if session is None:
             session = requests_html.HTMLSession()
         response = session.get(url)
         page = response.html
         table = page.find("pre", first=True)
-        # the first entry is ".."
-        links = table.find("a")[1:]
+        # some GNU mirrors format entries as a table
+        # (e.g. https://mirrors.ibiblio.org/gnu/readline/)
+        if table is None:
+            table = page.find("table", first=True)
+        links = table.find("a")
         for link in links:
-            name = link.text.rstrip('/')
-            if not re.match(pattern, name):
+            href = link.attrs['href']
+            name = link.text
+            # skip directory entries
+            if href.endswith('/') \
+                    or not re.match(pattern, name):
                 continue
-            yield cls._DownloadPageEntry(name, urllib.parse.urljoin(response.url, link.attrs['href']))
+            yield cls._DownloadPageEntry(name, urllib.parse.urljoin(response.url, href))
 
 
 class Re:
