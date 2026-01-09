@@ -1,3 +1,4 @@
+more_itertools
 requests-html
 lxml[html_clean]
 packaging
