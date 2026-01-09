@@ -300,7 +300,9 @@ class CPythonAvailableVersionsDirectory(KeyedList[_CPythonAvailableVersionInfo, 
         logger.info("Fetching available CPython versions")
         for name, url in DownloadPage.enum_download_entries(
                 "https://www.python.org/ftp/python/",
-                r'^\d+', self._session):
+                r'^(\d+.*)/$', self._session,
+                make_name= lambda m: m.group(1)
+        ):
             v = packaging.version.Version(name)
             if v < CUTOFF_VERSION or v in EXCLUDED_VERSIONS:
                 continue
@@ -491,7 +493,9 @@ class DownloadPage:
         url: str
 
     @classmethod
-    def enum_download_entries(cls, url, pattern, session=None) -> typing.Generator[_DownloadPageEntry, None, None]:
+    def enum_download_entries(cls, url, pattern, session=None,
+                              make_name = lambda m: m.string ) \
+            -> typing.Generator[_DownloadPageEntry, None, None]:
         """
         Enum download entries in a standard Apache directory page
         (incl. CPython download page https://www.python.org/ftp/python/)
@@ -510,11 +514,12 @@ class DownloadPage:
         links = table.find("a")
         for link in links:
             href = link.attrs['href']
+            # CPython entries are directories
             name = link.text
             # skip directory entries
-            if href.endswith('/') \
-                    or not re.match(pattern, name):
+            if not (m:=re.match(pattern, name)):
                 continue
+            name = make_name(m)
             yield cls._DownloadPageEntry(name, urllib.parse.urljoin(response.url, href))
 
 
